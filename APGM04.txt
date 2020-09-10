@@ -1,0 +1,42 @@
+/* rexx */                                                                      
+say; say; say; say                                                              
+                                                                                
+drop sal.                                                                       
+w = 0                                                                           
+                                                                                
+miembros.0  = 10                                                                
+miembros.1 = "alva0020"                                                         
+miembros.2 = "alva0021"                                                         
+miembros.3 = "alva0022"                                                         
+miembros.4 = "alva0023"                                                         
+miembros.5 = "alva0025"                                                         
+miembros.6 = "alva0016"                                                         
+miembros.7 = "alva0015"                                                         
+miembros.8 = "alva0018"                                                         
+miembros.9 = "alva0014"                                                         
+miembros.10 = "alva0010"                                                        
+                                                                                
+do x = 1 to miembros.0                                                          
+  name = miembros.x                                                             
+  "alloc dd(archi) dsn('alvarez.fuentes.cobol("||name||")') shr"                
+  "execio * diskr archi (stem pepe. finis"                                      
+   say 'cantidad de registros leidos:'  pepe.0                                  
+   do i = 1 to pepe.0                                                           
+      a = pos("copy",pepe.i)                                                    
+      if a > 0 then do                                                          
+                     say 'se encontró el copy:'                                 
+                     say  substr(pepe.i,7,72)                                   
+                     say 'en el programa' name                                  
+                     nmcopy = word(substr(pepe.i,7,62),2)                       
+                     w = w + 1                                                  
+                     sal.w = name nmcopy                                        
+                    end                                                         
+                                                                                
+   end                                                                          
+   "free file(archi)"                                                           
+ end                                                                            
+ "alloc dd(salida) dsn(fuentes.rexx(detaie)) shr"                               
+ "execio" w "diskw salida(stem sal. finis"                                      
+ "free file(salida)"                                                            
+ exit                                                                           
+
