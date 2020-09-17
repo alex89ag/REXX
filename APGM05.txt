@@ -1,0 +1,54 @@
+/* rexx  */                                                                     
+ xxx = arg(1)                                                                   
+                                                                                
+ if words(xxx) = 0 then do                                                      
+             say 'no ingreso parametros'                                        
+             say 'ingrese miembro y particionado'                               
+             pull xxx                                                           
+            end                                                                 
+                                                                                
+ pds = word(xxx,2)                                                              
+ miembro = word(xxx,1)                                                          
+ say 'miembro:' miembro                                                         
+ say 'pds:' pds                                                                 
+                                                                                
+exit                                                                            
+                                                                                
+ "alloc dd(archi) dsn('alarcon.fuentes.cobol(alamovi3)') shr"                   
+ if rc ^= 0 then do                                                             
+                   say 'error en alocar'                                        
+                   exit 12                                                      
+                 end                                                            
+ "execio * diskr archi(stem registros. finis"                                   
+ "free file(archi)"      /* libero el archvo  */                                
+                                                                                
+ say ; say;say ;                                                                
+                                                                                
+ do i = 1 to registros.0                                                        
+             algo = pos('DIVISION',registros.i)                                 
+             if algo > 0 then do                                                
+                  call veodiv                                                   
+                   say substr(registros.i,7,68)                                 
+             end                                                                
+ end                                                                            
+                                                                                
+ exit                                                                           
+                                                                                
+veodiv:                                                                         
+    quees = word(substr(registros.i,7,68),1)                                    
+                                                                                
+    select                                                                      
+      when quees = 'PROCEDURE' then                                             
+                  do                                                            
+                    say 'estoy en la PROCEDURE'                                 
+                  end                                                           
+      when quees = 'IDENTIFICATION' then                                        
+                  do                                                            
+                    say 'estoy en la ID'                                        
+                  end                                                           
+      otherwise nop                                                             
+    end                                                                         
+                                                                                
+                                                                                
+return                                                                          
+

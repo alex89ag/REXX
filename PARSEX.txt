@@ -1,0 +1,11 @@
+/* rexx */
+say
+say
+say
+var1='00001fernandez    ricardo   00010'
+PARSE VAR  VAR1 opi 6 apel 19 nome 29 total 34
+say "Numero:   " opi
+say "Apellido: " apel
+say "Nombre:   " nome
+say "Total:    " total
+

@@ -1,0 +1,21 @@
+/* rexx */
+say; say; say
+say; say; say
+pepe = "alarcon.clie.ksds"
+m = outtrap(list.)
+"listc all ent('"||pepe||"')"
+ do i = 1 to list.0
+   parse var list.i pala1 pala2 pala3 .
+   say pala1
+   say pala2
+   say pala3
+   say "###########"
+ end
+
+exit
+
+
+
+ /*if pos("REC-TOTAL",list.i) ¬= 0 then say word(list.i,1)
+   say substr(list.i,1,72) */
+

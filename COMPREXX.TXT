@@ -1,0 +1,22 @@
+/* rexx */
+address tso
+say; say; say;
+say 'Ingrese el nombre del programa:'
+pull jj
+x = prompt('off')
+drop w.
+
+W.1 ="//ALARCONC JOB 102,'COMPILAR CTA7',NOTIFY=&SYSUID, "
+W.2 ="//       MSGCLASS=Q,CLASS=A,MSGLEVEL=(1,1),REGION=0M "
+W.3 ="//STEP1        EXEC IGYWCL,PARM.COBOL='XREF,MAP,SSRANGE,OFFSET' "
+W.4 ="//COBOL.SYSIN  DD DISP=SHR,DSN=ALARCON.FUENTES.COBOL("||JJ||") "
+W.5 ="//COBOL.SYSLIB DD DSN=CAPA.FUENTES.COPY,DISP=SHR "
+W.6 ="//LKED.SYSLMOD DD DISP=SHR,DSN=GARCIA.LINKLIB("||JJ||") "
+W.7 ="//SYSPRINT     DD SYSOUT=* "
+W.8 ="// "
+W.0 = 8
+
+"alloc dd(sal) dsn('alarcon.fuentes.cntl(compx)') shr"
+"execio" 8 "diskw sal(stem w. finis"
+"submit 'alarcon.fuentes.cntl(compx)'"
+
