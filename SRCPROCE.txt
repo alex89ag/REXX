@@ -1,0 +1,33 @@
+/* REXX */
+say; say; say; say Enter para iniciar el programa...
+
+say "Ingrese un miembro"
+pull miembro
+
+  "ALLOC DD(ARCHI) DSN('ALARCON.FUENTES.COBOL("||miembro||")') SHR"
+  if RC ¬= 0 then do
+                     say "Error al alocar"
+                     exit 12
+                  end
+  else
+  "EXECIO * DISKR ARCHI (STEM registros. FINIS"
+  SAY "Cantidad de registros leidos:"  registros.0
+  if registros.0 = 0 then
+     say "No se encontro el miembro"
+  else
+     do i = 1 to registros.0
+        a = pos("PROCEDURE",registros.i)
+        if a > 0 then do
+                         desde = i
+                         call verprocedure
+                      end
+     end
+  "FREE FILE(ARCHI)"
+ exit
+
+ verprocedure:
+    do i = desde to registros.0
+       say substr(registros.i,8,72)
+    end
+    return
+

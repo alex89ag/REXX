@@ -1,0 +1,66 @@
+/* REXX */
+say; say; say; say Enter para iniciar el programa...
+
+say "Ingrese un miembro"
+pull miembro
+
+  "ALLOC DD(ARCHI) DSN('ALARCON.FUENTES.COBOL("||miembro||")') SHR"
+  if RC ¬= 0 then do
+                     say "Error al alocar"
+                     exit 12
+                  end
+  else
+  "EXECIO * DISKR ARCHI (STEM registros. FINIS"
+  say "Cantidad total de registros leidos:"  registros.0
+  if registros.0 = 0 then
+     say "No se encontro el miembro"
+  else
+     do i = 1 to registros.0
+        a = pos("COPY",registros.i)
+        if a > 0 then do
+                         say
+                         nmcopy = word(substr(registros.i,8,62),2)
+                         nmcopy = substr(nmcopy,1,length(nmcopy) - 1)
+                         fr1 = "Se encontro el COPY" nmcopy
+                         fr2 = "en el programa" miembro
+                         say fr1 fr2
+                         call vercopy
+                         say
+                       end
+     end
+     "FREE FILE(ARCHI)"
+ exit
+
+ vercopy:
+    "ALLOC DD(ARCHI2) DSN('CAPA.FUENTES.COPY("||nmcopy||")') SHR"
+    "EXECIO * DISKR ARCHI2 (STEM registrosC. FINIS"
+    say "Se leyeron:" registrosC.0 "registros en el copy"
+    say
+    say "Se encontraron los siguientes campos:"
+    do x = 1 to registrosC.0
+       b = pos("PIC",registrosC.x)
+       if b > 0 then
+          do
+             linea = substr(registrosC.x,8,62)
+             parse value linea with p1 p2 p3 p4
+             if p2 ¬= "PIC"& p2 ¬= "FILLER" then
+                do
+                   c = pos("X.",p4)
+                   d = pos("9.",p4)
+                   if c > 0 then
+                      long = c
+                   if d > 0 then
+                      long = d
+                   if c = 0 & d = 0 then
+                      do
+                         p4 = strip(substr(p4,3,length(p4)))
+                         p4 = substr(p4,1,length(p4) - 2)
+                         long = p4
+                      end
+                   say p2 "con una longitud de" long
+               end
+         end
+    end
+    "FREE FILE(ARCHI2)"
+    return
+
