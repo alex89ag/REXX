@@ -1,0 +1,38 @@
+/* REXX */
+say; say; say; say
+
+drop sal.
+w = 0
+miembros.0  = 7
+miembros.1  = "alamovic"
+miembros.2  = "alamovi3"
+miembros.3  = "alarcall"
+miembros.4  = "alarcli1"
+miembros.5  = "alarcort"
+miembros.6  = "alarctai"
+miembros.7  = "alardive"
+
+do x = 1 to miembros.0
+  name = miembros.x
+  "alloc dd(archi) dsn('alarcon.fuentes.cobol("||name||")') shr"
+  "execio * diskr archi (stem pepe. finis"
+   say 'cantidad de registros leidos:'  pepe.0
+   do i = 1 to pepe.0
+      a = pos("copy",pepe.i)
+      if a > 0 then do
+                     say 'se encontró el copy:'
+                     say  substr(pepe.i,7,72)
+                     say 'en el programa' name
+                     nmcopy = word(substr(pepe.i,7,62),2)
+                     w = w + 1
+                     sal.w = name nmcopy
+                    end
+
+   end
+   "free file(archi)"
+ end
+ "alloc dd(salida) dsn('alarcon.fuentes.rexx(copys)') shr"
+ "execio" w "diskw salida(stem sal. finis"
+ "free file(salida)"
+ exit
+
